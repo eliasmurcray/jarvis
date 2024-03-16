@@ -2,6 +2,7 @@
 #include <iostream>
 
 using std::string;
+using std::runtime_error;
 using nlohmann::json;
 
 size_t write_cb(char *contents, size_t size, size_t nmemb, void *data) {
@@ -12,7 +13,7 @@ size_t write_cb(char *contents, size_t size, size_t nmemb, void *data) {
 
 GPTClient::GPTClient(const string& key): key(key), curlSession(curl_easy_init()) {
 	if (!curlSession) {
-		throw std::runtime_error("Error: Failed to initialize CURL session.\n");
+		throw runtime_error("Error: Failed to initialize CURL session.\n");
 	}
 }
 
@@ -46,14 +47,14 @@ string GPTClient::getCompletion(const string& prompt, const string& model) {
 	CURLcode code = curl_easy_perform(curlSession);
 
 	if (code != CURLE_OK) {
-		throw std::runtime_error("Curl request failed: " + string(curl_easy_strerror(code)));
+		throw runtime_error("Curl request failed: " + string(curl_easy_strerror(code)));
 	}
 
 	curl_slist_free_all(headers);
 
 	json json_res = json::parse(res);
 	if (!json_res["error"].is_null()) {
-		throw std::runtime_error("Error: " + json_res["error"].dump());
+		throw runtime_error("Error: " + json_res["error"].dump());
 	}
 	return json_res["choices"][0]["message"]["content"].get<string>();
 }
