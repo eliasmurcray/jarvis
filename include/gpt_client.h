@@ -5,17 +5,19 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 
-const std::string GPT_COMPLETION_URL = "https://api.openai.com/v1/chat/completions";
+using std::string;
+
+const string GPT_COMPLETION_URL = "https://api.openai.com/v1/chat/completions";
 
 size_t write_cb(char *contents, size_t size, size_t nmemb, void *data);
 
 class GPTClient {
 public:
-	GPTClient(const std::string& key);
+	GPTClient(const string& key);
 	~GPTClient();
-	std::string getCompletion(const std::string& prompt, const std::string& modelName = "gpt-3.5-turbo");
+	string getCompletion(const string& prompt, const string& modelName = "gpt-3.5-turbo");
 private:
-	std::string key;
+	string key;
 	CURL* curlSession;
 };
 

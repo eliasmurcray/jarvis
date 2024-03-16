@@ -3,6 +3,8 @@
 
 #include <string>
 
-std::string getEnvironmentVariable(const std::string& name);
+using std::string;
+
+string getEnvironmentVariable(const string& name);
 
 #endif

@@ -4,20 +4,24 @@
 #include <string>
 
 using std::string;
+using std::cerr;
+using std::getline;
+using std::cout;
+using std::cin;
 
 int main() {
 	string key = getEnvironmentVariable("GPT_KEY");
 	if (key.empty()) {
-		std::cerr << "Error: Environment variable 'GPT_KEY' not found\n";
+		cerr << "Error: Environment variable 'GPT_KEY' not found\n";
 		return EXIT_FAILURE;
 	}
 
 	GPTClient client(key);
 	
 	string prompt;
-	std::getline(std::cin, prompt);
+	getline(cin, prompt);
 	string res = client.getCompletion(prompt);
-	std::cout << res << "\n";
+	cout << res << "\n";
 
 	return EXIT_SUCCESS;
 }

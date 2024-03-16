@@ -10,11 +10,10 @@ size_t write_cb(char *contents, size_t size, size_t nmemb, void *data) {
 	return total_size;
 }
 
-GPTClient::GPTClient(const string& key): curlSession(curl_easy_init()) {
+GPTClient::GPTClient(const string& key): key(key), curlSession(curl_easy_init()) {
 	if (!curlSession) {
 		throw std::runtime_error("Error: Failed to initialize CURL session.\n");
 	}
-	this->key = key;
 }
 
 GPTClient::~GPTClient() {
@@ -24,15 +23,15 @@ GPTClient::~GPTClient() {
 	}
 }
 
-std::string GPTClient::getCompletion(const string& prompt, const string& model) {
-	std::string res;
+string GPTClient::getCompletion(const string& prompt, const string& model) {
+	string res;
 	json req;
 	req["model"] = model;
 	req["messages"][0]["role"] = "user";
 	req["messages"][0]["content"] = prompt;
 	req["temperature"] = 0;
 	
-	std::string req_str = req.dump().c_str();
+	string req_str = req.dump().c_str();
 
 	struct curl_slist *headers = NULL;
 	headers = curl_slist_append(headers, "Content-Type: application/json");
@@ -47,7 +46,7 @@ std::string GPTClient::getCompletion(const string& prompt, const string& model) 
 	CURLcode code = curl_easy_perform(curlSession);
 
 	if (code != CURLE_OK) {
-		throw std::runtime_error("Curl request failed: " + std::string(curl_easy_strerror(code)));
+		throw std::runtime_error("Curl request failed: " + string(curl_easy_strerror(code)));
 	}
 
 	curl_slist_free_all(headers);

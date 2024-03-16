@@ -1,6 +1,8 @@
 #include "jarvis_utils.h"
 
-std::string getEnvironmentVariable(const std::string& name) {
+using std::string;
+
+string getEnvironmentVariable(const string& name) {
 	const char *value = getenv(name.c_str());
-	return value == NULL ? std::string() : std::string(value);
+	return value == NULL ? string() : string(value);
 }
