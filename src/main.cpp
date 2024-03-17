@@ -31,7 +31,7 @@ int main() {
 			cout << "\n" << res << "\n\n";
 		}
 
-		cout << client.getTranscription("media/test.wav") << "\n";
+		cout << client.getTranscription("media/test.wav");
 	} catch (runtime_error err) {
 		cout << "RuntimeError: " << err.what() << "\n";
 	} catch (...) {

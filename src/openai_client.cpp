@@ -74,6 +74,10 @@ string OpenAIClient::getTranscription(const string& audioFilePath, const string&
 	curl_mime_name(part, "model");
 	curl_mime_data(part, modelName.c_str(), CURL_ZERO_TERMINATED);
 
+	part = curl_mime_addpart(mime);
+	curl_mime_name(part, "response_format");
+	curl_mime_data(part, "text", CURL_ZERO_TERMINATED);
+
 	struct curl_slist *headers = curl_slist_append(NULL, ("Authorization: Bearer " + apiKey).c_str());
 
 	curl_easy_setopt(curlSession, CURLOPT_URL, OPENAI_TRANSCRIPTION_URL.c_str());
