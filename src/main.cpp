@@ -18,20 +18,20 @@ int main() {
 	}
 
 	try {
-	OpenAIClient client(key);
-	
-	cout << "Jarvis initialized. Type 'exit' to terminate the session.\n\n";
-	
-	string prompt;
-	while (1) {
-		cout << "# ";
-		getline(cin, prompt);
-		if (prompt == "exit") break;
-		string res = client.getCompletion(prompt);
-		cout << "\n" << res << "\n\n";
-	}
+		OpenAIClient client(key);
+		
+		cout << "Jarvis initialized. Type 'exit' to terminate the session.\n\n";
+		
+		string prompt;
+		while (1) {
+			cout << "# ";
+			getline(cin, prompt);
+			if (prompt == "exit") break;
+			string res = client.getCompletion(prompt);
+			cout << "\n" << res << "\n\n";
+		}
 
-	cout << client.getTranscription("media/test.wav") << "\n";
+		cout << client.getTranscription("media/test.wav") << "\n";
 	} catch (runtime_error err) {
 		cout << "RuntimeError: " << err.what() << "\n";
 	} catch (...) {
