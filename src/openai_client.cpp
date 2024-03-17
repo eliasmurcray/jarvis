@@ -1,5 +1,4 @@
-#include "gpt_client.h"
-#include <iostream>
+#include "openai_client.h"
 
 using std::string;
 using std::runtime_error;
@@ -11,20 +10,20 @@ size_t write_cb(char *contents, size_t size, size_t nmemb, void *data) {
 	return total_size;
 }
 
-GPTClient::GPTClient(const string& key): key(key), curlSession(curl_easy_init()) {
+OpenAIClient::OpenAIClient(const string& apiKey): apiKey(apiKey), curlSession(curl_easy_init()) {
 	if (!curlSession) {
 		throw runtime_error("Error: Failed to initialize CURL session.\n");
 	}
 }
 
-GPTClient::~GPTClient() {
+OpenAIClient::~OpenAIClient() {
 	if (curlSession) {
 		curl_easy_cleanup(curlSession);
 		curlSession = nullptr;
 	}
 }
 
-string GPTClient::getCompletion(const string& prompt, const string& model) {
+string OpenAIClient::getCompletion(const string& prompt, const string& model) {
 	string res;
 	json req;
 	req["model"] = model;
@@ -36,7 +35,7 @@ string GPTClient::getCompletion(const string& prompt, const string& model) {
 
 	struct curl_slist *headers = NULL;
 	headers = curl_slist_append(headers, "Content-Type: application/json");
-	headers = curl_slist_append(headers, ("Authorization: Bearer " + key).c_str());
+	headers = curl_slist_append(headers, ("Authorization: Bearer " + apiKey).c_str());
 
 	curl_easy_setopt(curlSession, CURLOPT_URL, GPT_COMPLETION_URL.c_str());
 	curl_easy_setopt(curlSession, CURLOPT_POSTFIELDS, req_str.c_str());

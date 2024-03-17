@@ -1,4 +1,4 @@
-#include "gpt_client.h"
+#include "openai_client.h"
 #include "jarvis_utils.h"
 #include <iostream>
 #include <string>
@@ -16,7 +16,7 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	GPTClient client(key);
+	OpenAIClient client(key);
 	
 	cout << "Jarvis initialized. Type 'exit' to terminate the session.\n\n";
 	
