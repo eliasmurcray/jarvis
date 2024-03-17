@@ -29,7 +29,5 @@ int main() {
 		cout << "\n" << res << "\n\n";
 	}
 
-	cout << "Session terminated.\n";
-
 	return EXIT_SUCCESS;
 }
