@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -std=c++11 -Wall -Wextra -lcurl
+CFLAGS = -std=c++17 -Wall -Wextra -lcurl
 SRC_FILES = $(wildcard src/*.cpp)
 INCLUDE_DIR = include
 BUILD_DIR = build
